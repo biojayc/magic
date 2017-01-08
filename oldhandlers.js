@@ -4,7 +4,7 @@ var fs = require('fs'),
     log = require('./log');
 
 var saveCard = function(card, cb) {
-	var path = "./final/" + card.filename;
+	var path = "./final/aer/" + card.filename;
 	var text = JSON.stringify(card);
 	fs.writeFile(path, text, 'utf8', function(err) {
 		cb();

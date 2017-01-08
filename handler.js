@@ -5,10 +5,10 @@ var fs = require('fs'),
 
 var cards = [];
 var cardsHash = {};
-var files = fs.readdirSync('final');
+var files = fs.readdirSync('final/aer');
 for (var i = 0; i < files.length; i++) {
   var filename = files[i];
-  var datafile = 'final/' + filename;
+  var datafile = 'final/aer/' + filename;
   // console.log("processing " + datafile);
   try {
 	  var text = fs.readFileSync(datafile, 'utf8');
