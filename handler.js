@@ -94,7 +94,7 @@ var main = function(req, res) {
 	var filteredcards = [];
   for (var index in sortedcards) {
 	  var card = sortedcards[index];
-    if (queryObj['sets'] && queryObj['sets'].indexOf(card.set) < 0) continue;
+    if (queryObj['sets'] && (queryObj['sets'].indexOf(card.set) < 0 && card.set != "MPS")) continue;
     if (!queryObj['sets'] && card.set == 'KLD') continue;
 	  if (queryObj['showmps'] != "on" && card.set == "MPS") continue;
 	  if (queryObj['color'] && queryObj['color'] != "all" && queryObj['color'].indexOf(card.color) < 0) continue;
