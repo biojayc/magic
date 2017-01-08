@@ -1,4 +1,4 @@
-<div style='float:left;width:300px;'><img src="images/##img##" /></div>
+<div style='float:left;width:300px;'><img src="images/##set##/##img##" /></div>
 <div>Name: ##cardName##</div>
 <div>Cost: ##manaCost##</div>
 <div>Type: ##type##</div>
@@ -27,7 +27,10 @@ document.addEventListener('keydown', function(event) {
 	} else if (event.keyCode == 83) {
 		document.getElementById('rarity').value = 'Special';
 		document.getElementById('assignrarity').submit();
-	}
+	}else if (event.keyCode == 76) {
+		document.getElementById('rarity').value = 'Basic Land';
+		document.getElementById('assignrarity').submit();
+	} 
 	//else alert(event.keyCode);
 });
 </script>

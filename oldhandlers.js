@@ -1,10 +1,24 @@
 var fs = require('fs'),
     layout = require('./layout'),
     requestUtils = require('./requestUtils'),
+    handler = require('./handler'),
     log = require('./log');
 
+var cards = handler.cards;
+var cardsHash = handler.cardsHash;
+
+var redirectToHome = function(res) {
+  res.writeHead(302, {'Location': '/'});
+  res.end("");
+}
+
+var redirectTo = function(res, path) {
+  res.writeHead(302, {'Location': path});
+  res.end("");
+}
+
 var saveCard = function(card, cb) {
-	var path = "./final/aer/" + card.filename;
+	var path = "./final/kld/" + card.filename;
 	var text = JSON.stringify(card);
 	fs.writeFile(path, text, 'utf8', function(err) {
 		cb();

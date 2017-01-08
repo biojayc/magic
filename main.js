@@ -1,5 +1,6 @@
 var restify = require('./restify'),
     handler = require('./handler'),
+    oldhandler = require('./oldhandlers'),
     log = require('./log');
 
 //log.init();
@@ -7,14 +8,14 @@ var restify = require('./restify'),
 restify.startWebServer(1338);
 restify.registerRoute("/", "GET", handler.main);
 restify.registerRoute("/card", "GET", handler.card);
-/*restify.registerRoute("/assignnumber", "GET", handler.assignNumber);
-restify.registerRoute("/assignnumber", "POST", handler.assignNumberPost);
-restify.registerRoute("/assignset", "GET", handler.assignSet);
-restify.registerRoute("/assignset", "POST", handler.assignSetPost);
-restify.registerRoute("/assigncmc", "GET", handler.assignCmc);
-restify.registerRoute("/assigncmc", "POST", handler.assignCmcPost);
-restify.registerRoute("/assignrarity", "GET", handler.assignRarity);
-restify.registerRoute("/assignrarity", "POST", handler.assignRarityPost);*/
+/*restify.registerRoute("/assignnumber", "GET", oldhandler.assignNumber);
+restify.registerRoute("/assignnumber", "POST", oldhandler.assignNumberPost);
+restify.registerRoute("/assignset", "GET", oldhandler.assignSet);
+restify.registerRoute("/assignset", "POST", oldhandler.assignSetPost);
+restify.registerRoute("/assigncmc", "GET", oldhandler.assignCmc);
+restify.registerRoute("/assigncmc", "POST", oldhandler.assignCmcPost);
+restify.registerRoute("/assignrarity", "GET", oldhandler.assignRarity);
+restify.registerRoute("/assignrarity", "POST", oldhandler.assignRarityPost);*/
 
 restify.registerStatic("/static.*");
 restify.registerStatic("/css.*", "/static/css");

@@ -3,6 +3,12 @@
 <form method="GET" action="/" name="filter" id="filter">
 <table>
 	<tr><td>Filter text:</td><td><input type="text" name="filtertext" id="filtertext" value="" /></td></tr>
+  <tr><td>Sets:</td><td>
+    <select name="sets" id="sets" >
+      <option value="AER">Aether Revolt</option>
+      <option value="KLD">Kaladesh</option>
+      <option value="AERKLD">Both</option>
+    </select></td></tr>
 	<tr><td>Show Masterpieces:</td><td><input type="checkbox" name="showmps" id="showmps" /></td></tr>
 	<tr><td>Colors:</td><td>
 		<select name="color" id="color" >
@@ -44,9 +50,7 @@
 			<option value="4">4</option>
 			<option value="5">5</option>
 			<option value="6">6</option>
-			<option value="7">7</option>
-			<option value="8">8</option>
-			<option value="9">9</option>
+			<option value="7+">7+</option>
 		</select></td></tr>
 	<tr><td>Card Type:</td><td>
 		<select name="cardtype" id="cardtype" >
@@ -78,8 +82,8 @@
 ##cards-begin##
 <div class="card">
 <div class="xbutton" onclick="filtercard('##cardName##');">[X]</a></div>
-<a href='card?c=##id##'>##cardName##</a>
-<a href='card?c=##id##'><img src="images/##set##/##img##" /></a>
+<a href='card?c=##set####number##'>##cardName##</a>
+<a href='card?c=##set####number##'><img src="images/##set##/##img##" /></a>
 </div>
 ##cards-end##
 

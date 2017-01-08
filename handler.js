@@ -5,39 +5,57 @@ var fs = require('fs'),
 
 var cards = [];
 var cardsHash = {};
-var files = fs.readdirSync('final/aer');
-for (var i = 0; i < files.length; i++) {
-  var filename = files[i];
-  var datafile = 'final/aer/' + filename;
-  // console.log("processing " + datafile);
-  try {
-	  var text = fs.readFileSync(datafile, 'utf8');
-	  var card = JSON.parse(text);
-	  card.filename = filename;
-	  // drop planeswalker deck cards
-	  if (card.number == null || card.number < 185) {
-		  cards.push(card);
-		  cardsHash[card.id] = card;
-		}
-	} catch (e) {
-		log.error("couldn't process: " + datafile);
-	}
-}
-
-var redirectToHome = function(res) {
-  res.writeHead(302, {'Location': '/'});
-  res.end("");
-}
-
-var redirectTo = function(res, path) {
-  res.writeHead(302, {'Location': path});
-  res.end("");
-}
+exports.cards = cards;
+exports.cardsHash = cardsHash;
+(function (set, max) {
+  var files = fs.readdirSync('final/' + set);
+  for (var i = 0; i < files.length; i++) {
+    var filename = files[i];
+    var datafile = 'final/' + set + '/' + filename;
+    // console.log("processing " + datafile);
+    try {
+  	  var text = fs.readFileSync(datafile, 'utf8');
+  	  var card = JSON.parse(text);
+  	  card.filename = filename;
+  	  // drop planeswalker deck cards
+  	  if (card.number == null || card.number < max) {
+  		  cards.push(card);
+  		  cardsHash[card.set + card.number] = card;
+  		}
+  	} catch (e) {
+  		log.error("couldn't process: " + datafile);
+  	}
+  }
+})('kld', 265); //185
+(function (set, max) {
+  var files = fs.readdirSync('final/' + set);
+  for (var i = 0; i < files.length; i++) {
+    var filename = files[i];
+    var datafile = 'final/' + set + '/' + filename;
+    // console.log("processing " + datafile);
+    try {
+      var text = fs.readFileSync(datafile, 'utf8');
+      var card = JSON.parse(text);
+      card.filename = filename;
+      // drop planeswalker deck cards
+      if (card.number == null || card.number < max) {
+        cards.push(card);
+        cardsHash[card.set + card.number] = card;
+      }
+    } catch (e) {
+      log.error("couldn't process: " + datafile);
+    }
+  }
+})('aer', 185);
 
 var numberSort = function(a, b) {
 	var av = 0, bv = 0;
-	if (a.set == 'MPS') av+= 1000;
-	if (b.set == 'MPS') bv+= 1000;
+	if (a.set == 'MPS') av+= 3000;
+	if (b.set == 'MPS') bv+= 3000;
+  if (a.set == 'AER') av+= 2000;
+  if (b.set == 'AER') bv+= 2000;
+  if (a.set == 'KLD') av+= 1000;
+  if (b.set == 'KLD') bv+= 1000;
 	av += a.number;
 	bv += b.number;
   return av - bv;
@@ -76,10 +94,13 @@ var main = function(req, res) {
 	var filteredcards = [];
   for (var index in sortedcards) {
 	  var card = sortedcards[index];
+    if (queryObj['sets'] && queryObj['sets'].indexOf(card.set) < 0) continue;
+    if (!queryObj['sets'] && card.set == 'KLD') continue;
 	  if (queryObj['showmps'] != "on" && card.set == "MPS") continue;
 	  if (queryObj['color'] && queryObj['color'] != "all" && queryObj['color'].indexOf(card.color) < 0) continue;
 	  if (queryObj['rarity'] && queryObj['rarity'] != "all" && queryObj['rarity'].indexOf(card.rarity) < 0) continue;
-	  if (queryObj['cmc'] && queryObj['cmc'] != "all" && card.cmc != queryObj['cmc']) continue;
+	  if (queryObj['cmc'] && queryObj['cmc'] != "all" && queryObj['cmc'] != "7+" && card.cmc != queryObj['cmc']) continue;
+    if (queryObj['cmc'] && queryObj['cmc'] == "7+" && card.cmc < 7) continue;
 	  if (queryObj['cardtype'] && queryObj['cardtype'] != "all" && card.type.indexOf(queryObj['cardtype']) < 0) continue;
 	  if (queryObj['filtercard'] && queryObj['filtercard'].indexOf(card.cardName) >= 0) continue;
 	  if (queryObj['filtertext']) {
@@ -99,7 +120,6 @@ var main = function(req, res) {
 	  filteredcards.push(card);
 	}
 
-	
 	var obj = {
 		cards: filteredcards,
 		count: filteredcards.length,
