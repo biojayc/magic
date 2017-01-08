@@ -4,7 +4,7 @@ var restify = require('./restify'),
 
 //log.init();
 
-restify.startWebServer(1337);
+restify.startWebServer(1338);
 restify.registerRoute("/", "GET", handler.main);
 restify.registerRoute("/card", "GET", handler.card);
 /*restify.registerRoute("/assignnumber", "GET", handler.assignNumber);
