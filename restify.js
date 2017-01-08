@@ -126,13 +126,13 @@ var registerStatic = function(path, realpath) {
             contentType = 'text/css';
           }
           if (acceptEncoding.match(/\bdeflat\b/)) {
-            res.writeHead(200, { 'content-encoding': 'deflate', 'Content-Type': contentType });
+            res.writeHead(200, { 'content-encoding': 'deflate', 'Content-Type': contentType, 'Cache-Control': 'max-age=120' });
             raw.pipe(zlib.createDeflate()).pipe(res);
           } else if (acceptEncoding.match(/\bgzip\b/)) {
-            res.writeHead(200, { 'content-encoding' : 'gzip', 'Content-Type': contentType });
+            res.writeHead(200, { 'content-encoding' : 'gzip', 'Content-Type': contentType, 'Cache-Control': 'max-age=120' });
             raw.pipe(zlib.createGzip()).pipe(res);
           } else {
-            res.writeHead(200, { 'Content-Type': contentType });
+            res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': 'max-age=120' });
             raw.pipe(res);
           }
         } else {
