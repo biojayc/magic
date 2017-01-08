@@ -1,0 +1,35 @@
+<div style='float:left;width:300px;'><img src="images/##img##" /></div>
+<div>Name: ##cardName##</div>
+<div>Cost: ##manaCost##</div>
+<div>Type: ##type##</div>
+<div>Color: ##color##</div>
+<div>P/T: ##pt##</div>
+<div>Text: ##text##</div>
+
+<form action="assignrarity?c=##id##" method="post" name="assignrarity" id="assignrarity">
+	<input type="hidden" name="rarity" id="rarity" value="" />
+</form>
+
+<script>
+document.addEventListener('keydown', function(event) {
+	if (event.keyCode == 67) {
+		document.getElementById('rarity').value = 'Common';
+	  document.getElementById('assignrarity').submit();
+	} else if (event.keyCode == 85) {
+		document.getElementById('rarity').value = 'Uncommon';
+		document.getElementById('assignrarity').submit();
+	} else if (event.keyCode == 82) {
+		document.getElementById('rarity').value = 'Rare';
+		document.getElementById('assignrarity').submit();
+	} else if (event.keyCode == 77) {
+		document.getElementById('rarity').value = 'Mythic';
+		document.getElementById('assignrarity').submit();
+	} else if (event.keyCode == 83) {
+		document.getElementById('rarity').value = 'Special';
+		document.getElementById('assignrarity').submit();
+	}
+	//else alert(event.keyCode);
+});
+</script>
+
+<div style="clear:both;"></div>

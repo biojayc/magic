@@ -1,0 +1,33 @@
+<div style='float:left;width:300px;'><img src="images/##img##" /></div>
+<div>Name: ##cardName##</div>
+<div>Cost: ##manaCost##</div>
+<div>Type: ##type##</div>
+<div>Color: ##color##</div>
+<div>P/T: ##pt##</div>
+<div>Text: ##text##</div>
+
+<form action="assigncmc?c=##id##" method="post" name="assigncmc" id="assigncmc">
+	<input type="hidden" name="cmc" id="cmc" value="" />
+</form>
+
+<script>
+document.addEventListener('keydown', function(event) {
+	/*if (event.keyCode == 65) {
+		document.getElementById('set').value = 'AER';
+		document.getElementById('assignset').submit();
+	} else if (event.keyCode == 77) {
+		document.getElementById('set').value = 'MPS';
+		document.getElementById('assignset').submit();
+	}*/
+	//alert(event.keyCode);
+	var value = event.keyCode;
+	if (value < 48 || value > 57) {
+		return;
+	}
+	var cmc = value - 48;
+	document.getElementById('cmc').value = cmc;
+	document.getElementById('assigncmc').submit();
+});
+</script>
+
+<div style="clear:both;"></div>

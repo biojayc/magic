@@ -1,0 +1,25 @@
+<div style='float:left;width:300px;'><img src="images/##img##" /></div>
+<div>Name: ##cardName##</div>
+<div>Cost: ##manaCost##</div>
+<div>Type: ##type##</div>
+<div>Color: ##color##</div>
+<div>P/T: ##pt##</div>
+<div>Text: ##text##</div>
+
+<form action="assignset?c=##id##" method="post" name="assignset" id="assignset">
+	<input type="hidden" name="set" id="set" value="" />
+</form>
+
+<script>
+document.addEventListener('keydown', function(event) {
+	if (event.keyCode == 65) {
+		document.getElementById('set').value = 'AER';
+		document.getElementById('assignset').submit();
+	} else if (event.keyCode == 77) {
+		document.getElementById('set').value = 'MPS';
+		document.getElementById('assignset').submit();
+	}
+});
+</script>
+
+<div style="clear:both;"></div>

@@ -1,0 +1,115 @@
+
+<hr />
+<form method="GET" action="/" name="filter" id="filter">
+<table>
+	<tr><td>Filter text:</td><td><input type="text" name="filtertext" id="filtertext" value="" /></td></tr>
+	<tr><td>Show Masterpieces:</td><td><input type="checkbox" name="showmps" id="showmps" /></td></tr>
+	<tr><td>Colors:</td><td>
+		<select name="color" id="color" >
+			<option value="all">All</option>
+			<option value="Colorless">Colorless</option>
+			<option value="White">White</option>
+			<option value="Blue">Blue</option>
+			<option value="Black">Black</option>
+			<option value="Red">Red</option>
+			<option value="Green">Green</option>
+			<option value="Gold">Gold</option>
+			<option value="WhiteBlue">WU</option>
+			<option value="BlueBlack">UB</option>
+			<option value="BlackRed">BR</option>
+			<option value="RedGreen">RG</option>
+			<option value="GreenWhite">GW</option>
+			<option value="WhiteBlack">WB</option>
+			<option value="BlueRed">UR</option>
+			<option value="BlackGreen">BG</option>
+			<option value="RedWhite">RW</option>
+			<option value="GreenBlue">GU</option>
+		</select></td></tr>
+	<tr><td>Rarity:</td><td>
+		<select name="rarity" id="rarity" >
+			<option value="all">All</option>
+			<option value="Common">Common</option>
+			<option value="Uncommon">Uncommon</option>
+			<option value="Rare">Rare</option>
+			<option value="Mythic">Mythic</option>
+			<option value="CommonUncommon">C/U</option>
+		</select></td></tr>
+  <tr><td>Cmc:</td><td>
+		<select name="cmc" id="cmc" >
+			<option value="all">All</option>
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+		</select></td></tr>
+	<tr><td>Card Type:</td><td>
+		<select name="cardtype" id="cardtype" >
+			<option value="all">All</option>
+			<option value="Creature">Creature</option>
+			<option value="Sorcery">Sorcery</option>
+			<option value="Instant">Instant</option>
+			<option value="Artifact">Artifact</option>
+			<option value="Enchantment">Enchantment</option>
+			<option value="Land">Land</option>
+		</select></td></tr>
+	<tr><td>Sort by:</td><td>
+		<select name="sort" id="sort" >
+			<option value="number">Number</option>
+			<option value="cmc">CMC</option>
+			<option value="rarity">Rarity</option>
+		</select></td></tr>
+	<tr><td colspan=2><input type="submit" /><input type="button" onclick="window.location='/'" value="Clear" /></td></tr>
+</table>
+<input type="hidden" name="filtercard" id="filtercard" value="" />
+</form>
+##IF filtered##
+<span>Filtered: ##filtered##</span>
+##ENDIF filtered##
+<hr />
+<span>Number of results: ##count##</span>
+<hr />
+
+##cards-begin##
+<div class="card">
+<div class="xbutton" onclick="filtercard('##cardName##');">[X]</a></div>
+<a href='card?c=##id##'>##cardName##</a>
+<a href='card?c=##id##'><img src="images/##img##" /></a>
+</div>
+##cards-end##
+
+<div style="clear:both"></div>
+
+<script>
+(window.onload = function () {
+  var match,
+      pl     = /\+/g,  // Regex for replacing addition symbol with a space
+      search = /([^&=]+)=?([^&]*)/g,
+      decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+      query  = window.location.search.substring(1);
+
+  while (match = search.exec(query)) {
+  	var name = decode(match[1]);
+  	var value = decode(match[2]);
+  	if (value == "on") {
+  		document.getElementById(name).checked = true;
+  	} else {
+  	  document.getElementById(name).value = value;
+  	}
+  }
+})();
+
+function filtercard(value) {
+	if (document.getElementById('filtercard').value.length > 0) {
+	  document.getElementById('filtercard').value = document.getElementById('filtercard').value + ", " + value;
+	} else {
+		document.getElementById('filtercard').value = value;
+	}
+	document.getElementById('filter').submit();
+}
+</script>
